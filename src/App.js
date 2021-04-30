@@ -16,6 +16,9 @@ class App extends Component {
     this.setState({
       isLoading: true,
     });
+    this.getList();
+  }
+  getList = () => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((data) => {
@@ -24,31 +27,19 @@ class App extends Component {
           isLoading: false,
         });
       });
-  }
-
-  // renderTableHeader = () => {
-  //   return Object.keys(this.state.users[0]).map((attr) => (
-  //     <th className="row-class" key={attr}>
-  //       {attr.toUpperCase()}
-  //     </th>
-  //   ));
-  // };
-  // renderTableRows = () => {
-  //   return this.state.users.map((user) => {
-  //     return (
-  //       <tr key={user.id}>
-  //         <td className="row-class">{user.id}</td>
-  //         <td className="row-class">{user.name}</td>
-  //         <td className="row-class">{user.username}</td>
-  //         <td className="row-class">{user.email}</td>
-  //         <td className="row-class">{`${user.address.street}, ${user.address.city}, ${user.address.zipcode}`}</td>
-  //         <td className="row-class">{user.phone}</td>
-  //         <td className="row-class">{user.website}</td>
-  //         <td className="row-class">{`${user.company.name}, ${user.company.catchPhrase}`}</td>
-  //       </tr>
-  //     );
-  //   });
-  // };
+  };
+  deleteRow = (id) => {
+    fetch("https://jsonplaceholder.typicode.com/users/" + id, {
+      method: "DELETE",
+    }).then((result) => {
+      result.json().then((resp) => {
+        const aa = this.state.users;
+        this.setState({
+          users: aa.filter((user) => user.id !== id),
+        });
+      });
+    });
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -63,7 +54,7 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            <RenderTableRows {...this.state} />
+            <RenderTableRows {...this.state} deleteRow={this.deleteRow} />
           </tbody>
         </table>
       </div>

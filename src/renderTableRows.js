@@ -12,6 +12,14 @@ const RenderTableRows = (props) => {
         <td className="row-class">{user.phone}</td>
         <td className="row-class">{user.website}</td>
         <td className="row-class">{`${user.company.name}, ${user.company.catchPhrase}`}</td>
+        <td className="row-class">
+          <button
+            className="delete-btn"
+            onClick={() => props.deleteRow(user.id)}
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     );
   });
