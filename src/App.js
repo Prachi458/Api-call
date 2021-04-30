@@ -33,9 +33,9 @@ class App extends Component {
       method: "DELETE",
     }).then((result) => {
       result.json().then((resp) => {
-        const aa = this.state.users;
+        const userData = this.state.users;
         this.setState({
-          users: aa.filter((user) => user.id !== id),
+          users: userData.filter((user) => user.id !== id),
         });
       });
     });
