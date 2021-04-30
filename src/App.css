@@ -13,3 +13,9 @@ body {
   padding: 5px;
   font-family: "Fira Code";
 }
+
+.delete-btn {
+  cursor: pointer;
+  background: #937676;
+  color: white;
+}
