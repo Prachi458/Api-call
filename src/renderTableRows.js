@@ -11,13 +11,21 @@ const RenderTableRows = (props) => {
         <td className="row-class">{`${user.address.street}, ${user.address.city}, ${user.address.zipcode}`}</td>
         <td className="row-class">{user.phone}</td>
         <td className="row-class">{user.website}</td>
-        <td className="row-class">{`${user.company.name}, ${user.company.catchPhrase}`}</td>
+        <td className="row-class">{`${user.company.cname}, ${user.company.catchPhrase}, ${user.company.bs}`}</td>
         <td className="row-class">
           <button
             className="delete-btn"
             onClick={() => props.deleteRow(user.id)}
           >
             Delete
+          </button>
+        </td>
+        <td className="row-class">
+          <button
+            className="update-btn"
+            onClick={() => props.updateRow(user.id)}
+          >
+            Update
           </button>
         </td>
       </tr>
