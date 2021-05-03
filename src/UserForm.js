@@ -61,7 +61,7 @@ const UserForm = (props) => {
         <br />
         <label className="label-class">Zipcode</label>
         <input
-          type="number"
+          type="text"
           name="zipcode"
           value={props.zipcode}
           onChange={props.handleInput}
@@ -71,7 +71,7 @@ const UserForm = (props) => {
         <br />
         <label className="label-class">Phone</label>
         <input
-          type="number"
+          type="text"
           name="phone"
           value={props.phone}
           onChange={props.handleInput}
@@ -96,7 +96,7 @@ const UserForm = (props) => {
         <input
           type="text"
           name="cname"
-          value={props.cname}
+          value={props.name}
           onChange={props.handleInput}
           className="input-class"
           required

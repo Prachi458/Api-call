@@ -21,7 +21,7 @@ class App extends Component {
       phone: "",
       website: "",
       company: [],
-      cname: "",
+      name: "",
       catchPhrase: "",
       bs: "",
     };
@@ -33,6 +33,7 @@ class App extends Component {
     });
     this.getList();
   }
+
   getList = () => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
@@ -43,6 +44,7 @@ class App extends Component {
         });
       });
   };
+
   deleteRow = (id) => {
     fetch("https://jsonplaceholder.typicode.com/users/" + id, {
       method: "DELETE",
@@ -67,44 +69,31 @@ class App extends Component {
         name: this.state.name,
         username: this.state.username,
         email: this.state.email,
-        address: {
-          street: this.state.street,
-          city: this.state.city,
-          zipcode: this.state.zipcode,
-        },
+        street: this.state.street,
+        city: this.state.city,
+        zipcode: this.state.zipcode,
         phone: this.state.phone,
         website: this.state.website,
-        company: [
-          {
-            cname: this.state.company.cname,
-            catchPhrase: this.state.company.catchPhrase,
-            bs: this.state.company.bs,
-          },
-        ],
+        name: this.state.name,
+        catchPhrase: this.state.catchPhrase,
+        bs: this.state.bs,
       }),
     })
       .then((result) => result.json())
       .then((resp) => {
-        let selectedItem = this.state.users.find((item, id) => id === id);
+        let selectedItem = this.state.users.find((item) => item.id === id);
         this.setState({
           name: selectedItem.name,
           username: selectedItem.username,
           email: selectedItem.email,
-          address: {
-            street: selectedItem.address.street,
-            city: selectedItem.address.city,
-            zipcode: selectedItem.address.zipcode,
-          },
-
+          street: selectedItem.address.street,
+          city: selectedItem.address.city,
+          zipcode: selectedItem.address.zipcode,
           phone: selectedItem.phone,
           website: selectedItem.website,
-          company: [
-            {
-              cname: selectedItem.company.name,
-              catchPhrase: selectedItem.company.catchPhrase,
-              bs: selectedItem.company.bs,
-            },
-          ],
+          name: selectedItem.company.name,
+          catchPhrase: selectedItem.company.catchPhrase,
+          bs: selectedItem.company.bs,
         });
       });
   };
@@ -115,24 +104,6 @@ class App extends Component {
       [name]: value,
     });
   };
-
-  // handleAddress = (event) => {
-  //   const { name, value } = event.target;
-  //   this.state.address.map(() =>
-  //     this.setState({
-  //       [name]: value,
-  //     })
-  //   );
-  // };
-
-  // handleCompany = (event) => {
-  //   const { name, value } = event.target;
-  //   this.state.company.map(() =>
-  //     this.setState({
-  //       [name]: value,
-  //     })
-  //   );
-  // };
 
   addRecord = (event) => {
     event.preventDefault();
@@ -152,9 +123,9 @@ class App extends Component {
         zipcode: this.state.zipcode,
         phone: this.state.phone,
         website: this.state.website,
-        cname: this.state.cname,
-        catchPhrase: this.state.catchPhrase,
-        bs: this.state.bs,
+        name: this.state.company.name,
+        catchPhrase: this.state.company.catchPhrase,
+        bs: this.state.company.bs,
       }),
     })
       .then((result) => result.json())
@@ -173,7 +144,7 @@ class App extends Component {
             phone: this.state.phone,
             website: this.state.website,
             company: {
-              cname: this.state.cname,
+              name: this.state.name,
               catchPhrase: this.state.catchPhrase,
               bs: this.state.bs,
             },
@@ -190,7 +161,7 @@ class App extends Component {
           zipcode: "",
           phone: "",
           website: "",
-          cname: "",
+          name: "",
           catchPhrase: "",
           bs: "",
         });
