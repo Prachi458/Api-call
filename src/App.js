@@ -62,6 +62,7 @@ class App extends Component {
     fetch("https://jsonplaceholder.typicode.com/users", {
       method: "PUT",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -83,6 +84,7 @@ class App extends Component {
       .then((resp) => {
         let selectedItem = this.state.users.find((item) => item.id === id);
         this.setState({
+          id: selectedItem.id,
           name: selectedItem.name,
           username: selectedItem.username,
           email: selectedItem.email,
@@ -96,6 +98,8 @@ class App extends Component {
           bs: selectedItem.company.bs,
         });
       });
+
+    console.log(this.state.users);
   };
 
   handleInput = (event) => {
@@ -107,6 +111,10 @@ class App extends Component {
 
   addRecord = (event) => {
     event.preventDefault();
+    this.setState({
+      id: 1,
+    });
+
     fetch("https://jsonplaceholder.typicode.com/users", {
       method: "POST",
       headers: {
@@ -130,9 +138,15 @@ class App extends Component {
     })
       .then((result) => result.json())
       .then((resp) => {
+        this.state.users.map((a) => {
+          this.setState({
+            id: this.state.id + 1,
+          });
+        });
         let updatedData = [
           ...this.state.users,
           {
+            id: this.state.id,
             name: this.state.name,
             username: this.state.username,
             email: this.state.email,
@@ -150,6 +164,7 @@ class App extends Component {
             },
           },
         ];
+
         alert("Record Added");
         this.setState({
           users: updatedData,
@@ -167,7 +182,6 @@ class App extends Component {
         });
       });
   };
-
   render() {
     if (this.state.isLoading) {
       return <div>Loading...</div>;

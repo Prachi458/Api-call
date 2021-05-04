@@ -44,6 +44,7 @@ body {
   font-weight: bold;
   padding: 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 .username-class {
   width: 20%;
