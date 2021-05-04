@@ -59,43 +59,23 @@ class App extends Component {
   };
 
   updateRow = (id) => {
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: this.state.id,
-        name: this.state.name,
-        username: this.state.username,
-        email: this.state.email,
-        street: this.state.street,
-        city: this.state.city,
-        zipcode: this.state.zipcode,
-        phone: this.state.phone,
-        website: this.state.website,
-        name: this.state.name,
-        catchPhrase: this.state.catchPhrase,
-        bs: this.state.bs,
-      }),
-    })
-      .then((result) => result.json())
-      .then((resp) => {
-        let selectedItem = this.state.users.find((item) => item.id === id);
-        this.setState({
-          name: selectedItem.name,
-          username: selectedItem.username,
-          email: selectedItem.email,
-          street: selectedItem.address.street,
-          city: selectedItem.address.city,
-          zipcode: selectedItem.address.zipcode,
-          phone: selectedItem.phone,
-          website: selectedItem.website,
-          name: selectedItem.company.name,
-          catchPhrase: selectedItem.company.catchPhrase,
-          bs: selectedItem.company.bs,
-        });
-      });
+    let selectedItem = this.state.users.find((item) => item.id === id);
+    this.setState({
+      id: selectedItem.id,
+      name: selectedItem.name,
+      username: selectedItem.username,
+      email: selectedItem.email,
+      street: selectedItem.address.street,
+      city: selectedItem.address.city,
+      zipcode: selectedItem.address.zipcode,
+      phone: selectedItem.phone,
+      website: selectedItem.website,
+      name: selectedItem.company.name,
+      catchPhrase: selectedItem.company.catchPhrase,
+      bs: selectedItem.company.bs,
+    });
+
+    console.log(this.state.users);
   };
 
   handleInput = (event) => {
@@ -107,67 +87,135 @@ class App extends Component {
 
   addRecord = (event) => {
     event.preventDefault();
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: this.state.id,
-        name: this.state.name,
-        username: this.state.username,
-        email: this.state.email,
-        street: this.state.street,
-        city: this.state.city,
-        zipcode: this.state.zipcode,
-        phone: this.state.phone,
-        website: this.state.website,
-        name: this.state.company.name,
-        catchPhrase: this.state.company.catchPhrase,
-        bs: this.state.company.bs,
-      }),
-    })
-      .then((result) => result.json())
-      .then((resp) => {
-        let updatedData = [
-          ...this.state.users,
-          {
-            name: this.state.name,
-            username: this.state.username,
-            email: this.state.email,
-            address: {
-              street: this.state.street,
-              city: this.state.city,
-              zipcode: this.state.zipcode,
-            },
-            phone: this.state.phone,
-            website: this.state.website,
-            company: {
-              name: this.state.name,
-              catchPhrase: this.state.catchPhrase,
-              bs: this.state.bs,
-            },
-          },
-        ];
-        alert("Record Added");
-        this.setState({
-          users: updatedData,
-          name: "",
-          username: "",
-          email: "",
-          street: "",
-          city: "",
-          zipcode: "",
-          phone: "",
-          website: "",
-          name: "",
-          catchPhrase: "",
-          bs: "",
-        });
-      });
-  };
 
+    if (!this.state.id) {
+      fetch("https://jsonplaceholder.typicode.com/users", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: this.state.id,
+          name: this.state.name,
+          username: this.state.username,
+          email: this.state.email,
+          street: this.state.street,
+          city: this.state.city,
+          zipcode: this.state.zipcode,
+          phone: this.state.phone,
+          website: this.state.website,
+          name: this.state.company.name,
+          catchPhrase: this.state.company.catchPhrase,
+          bs: this.state.company.bs,
+        }),
+      })
+        .then((result) => result.json())
+        .then((resp) => {
+          const id = this.state.users.length + 1;
+          let updatedData = [
+            ...this.state.users,
+            {
+              id: id,
+              name: this.state.name,
+              username: this.state.username,
+              email: this.state.email,
+              address: {
+                street: this.state.street,
+                city: this.state.city,
+                zipcode: this.state.zipcode,
+              },
+              phone: this.state.phone,
+              website: this.state.website,
+              company: {
+                name: this.state.name,
+                catchPhrase: this.state.catchPhrase,
+                bs: this.state.bs,
+              },
+            },
+          ];
+          alert("Record Added");
+          this.setState({
+            users: updatedData,
+            name: "",
+            username: "",
+            email: "",
+            street: "",
+            city: "",
+            zipcode: "",
+            phone: "",
+            website: "",
+            name: "",
+            catchPhrase: "",
+            bs: "",
+          });
+        });
+    }
+    if (this.state.id) {
+      fetch("https://jsonplaceholder.typicode.com/users", {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: this.state.id,
+          name: this.state.name,
+          username: this.state.username,
+          email: this.state.email,
+          street: this.state.street,
+          city: this.state.city,
+          zipcode: this.state.zipcode,
+          phone: this.state.phone,
+          website: this.state.website,
+          name: this.state.name,
+          catchPhrase: this.state.catchPhrase,
+          bs: this.state.bs,
+        }),
+      })
+        .then((result) => result.json())
+        .then((resp) => {
+          let updatedData = this.state.users.map((user) =>
+            user.id === this.state.id
+              ? {
+                  id: this.state.id,
+                  name: this.state.name,
+                  username: this.state.username,
+                  email: this.state.email,
+                  address: {
+                    street: this.state.street,
+                    city: this.state.city,
+                    zipcode: this.state.zipcode,
+                  },
+                  phone: this.state.phone,
+                  website: this.state.website,
+                  company: {
+                    name: this.state.name,
+                    catchPhrase: this.state.catchPhrase,
+                    bs: this.state.bs,
+                  },
+                }
+              : user
+          );
+          alert("Record Updated");
+          this.setState({
+            users: updatedData,
+            id: !this.state.id,
+            name: "",
+            username: "",
+            email: "",
+            street: "",
+            city: "",
+            zipcode: "",
+            phone: "",
+            website: "",
+            name: "",
+            catchPhrase: "",
+            bs: "",
+          });
+        });
+    }
+  };
   render() {
     if (this.state.isLoading) {
       return <div>Loading...</div>;
